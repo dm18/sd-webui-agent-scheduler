@@ -462,11 +462,12 @@ class TaskRunner:
                 if result[0] is None and hasattr(shared.state, "oom") and shared.state.oom:
                     res = OutOfMemoryError()
                 elif "CUDA out of memory" in result[2]:
-                    res = OutOfMemoryError()
+                    #res = OutOfMemoryError()
+                    os._exit(1)
                 elif "Sizes of tensors must match except" in result[2]:
-                    res = OutOfMemoryError()
+                    os._exit(1)
                 elif "misaligned address" in result[2]:
-                    res = OutOfMemoryError()
+                    os._exit(1)
                 else:
                     res = result[1]
             except Exception as e:
@@ -491,11 +492,12 @@ class TaskRunner:
             res = result.info
         except Exception as e:
             if "CUDA out of memory" in str(e):
-                res = OutOfMemoryError()
+                #res = OutOfMemoryError()
+                os._exit(1)
             elif "Sizes of tensors must match except" in str(e):
-                res = OutOfMemoryError()
+                os._exit(1)
             elif "misaligned address" in str(e):
-                res = OutOfMemoryError()
+                os._exit(1)
             else:
                 res = e
         finally:
